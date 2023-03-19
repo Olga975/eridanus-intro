@@ -1,3 +1,36 @@
 body {
-    background-color: #3A98B9;
+    background-color: #CBE4DE;
+    color: #2C3333;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+
+}
+
+section {
+    padding: 5px;
+    margin: 10px;
+}
+
+h1 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2E4F4F;
+}
+
+h2 {
+    color: #0E8388;
+    font-weight: bold;
+}
+
+.experience li {
+    border: 5px solid #0E8388;
+}
+
+#skills li {
+    text-align: left;
+    border: 1px dashed #0E8388;
+    margin: 5px ;
+    padding: 20px;
+    padding-right: 0px;
+    list-style-type: none;
 }
