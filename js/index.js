@@ -55,4 +55,29 @@ messageForm.addEventListener("submit", (event) => {
 
 });
 
+const githubRequest = new XMLHttpRequest();
+githubRequest.open("GET", "https://api.github.com/users/Olga975/repos");
+githubRequest.send();
 
+githubRequest.addEventListener("load", function() {
+    const repositories = JSON.parse(this.response);
+    const projectSection = document.querySelector("#projects");
+    const projectList = projectSection.querySelector("ul");
+  
+    for (let i = 0; i < repositories.length; i++) {
+      const repo = repositories[i];
+      const project = document.createElement('li');
+      const link = document.createElement('a');
+      link.href = repo.html_url;
+      link.textContent = repo.name;
+      project.appendChild(link);
+      projectList.appendChild(project);
+    }
+});
+  
+  
+ 
+  
+  
+  
+  
