@@ -5,25 +5,31 @@ const footer = document.querySelector("footer");
 const copyright = document.createElement("p");
 
 copyright.innerHTML = `Olga Adams &copy ${thisYear}`;
-
 footer.appendChild(copyright);
 
-const skills = ["HTML", 
+const skills = [
+                "HTML",     
                 "CSS",
                 "JavaScript",
+                "Git",
+                "Github",
+                "MySQL",
+                "Cypress",
 ];   
 
-const skillsSection = document.querySelector('#skills');
-const skillsList = skillsSection.querySelector('ul')
+const skillsSection = document.getElementById('skills');
+const skillsList = skillsSection.querySelector("ul");
 
-for (i = 0; i < skills.length; i++) {
+for (let i = 0; i < skills.length; i++) {
+
     let skill = document.createElement("li");
     skill.innerText = skills[i];
     skillsList.appendChild(skill);
 }
 
-const messageForm = document.forms.leave_message;
-messageForm.addEventListener("submit", (event) => {
+   const messageForm = document.forms.leave_message;
+
+   messageForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
     const usersName = event.target.usersName.value;
@@ -52,32 +58,33 @@ messageForm.addEventListener("submit", (event) => {
     messageList.appendChild(newMessage);
 
     messageForm.reset();
-
 });
 
-const githubRequest = new XMLHttpRequest();
-githubRequest.open("GET", "https://api.github.com/users/Olga975/repos");
-githubRequest.send();
+const dateFixer = (date) => {
+    return date.slice(0, 10);
+}
 
-githubRequest.addEventListener("load", function() {
-    const repositories = JSON.parse(this.response);
-    const projectSection = document.querySelector("#projects");
-    const projectList = projectSection.querySelector("ul");
+
+fetch("https://api.github.com/users/Olga975/repos")
+.then((response) => response.json())
+.then((data) => {
+  const projectsSection = document.getElementById('projects');
+  const projectsList = projectsSection.querySelector('ul');
   
-    for (let i = 0; i < repositories.length; i++) {
-      const repo = repositories[i];
-      const project = document.createElement('li');
-      const link = document.createElement('a');
-      link.href = repo.html_url;
-      link.textContent = repo.name;
-      project.appendChild(link);
-      projectList.appendChild(project);
-    }
-});
-  
-  
- 
-  
-  
-  
-  
+  for (let i = 0; i < data.length; i++) {
+    const project = document.createElement('li');
+    const name = document.createElement('h3');
+    const description = document.createElement('p');
+    const updatedAt = document.createElement('p');
+    
+    name.innerHTML = `<a href="${data[i].html_url}" target="_blank">${data[i].name}</a>`;
+    description.innerText = data[i].description;
+    updatedAt.innerText = `Updated at: ${dateFixer(data[i].updated_at)}`;
+    
+    project.appendChild(name);
+    project.appendChild(description);
+    project.appendChild(updatedAt);
+    projectsList.appendChild(project);
+  }
+})
+.catch((error) => console.log(error));
